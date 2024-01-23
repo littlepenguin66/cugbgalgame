@@ -89,9 +89,9 @@ def get_thread_ids():
     try:
         with open(THREAD_LIST_FILE, 'r') as f:
             tzid_list = [line.strip() for line in f.readlines()]
-        print('重新记录帖子id')
     except FileNotFoundError:
         tzid_list = []
+        print('重新记录帖子id')
         for pa in range(0, 800, 50):
             url = f'https://tieba.baidu.com/f?kw=%E5%AD%99%E7%AC%91%E5%B7%9D&ie=utf-8&pn={pa}'
             try:
