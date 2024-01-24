@@ -18,7 +18,7 @@
   - `fake_useragent`
 - 您可以使用以下命令进行安装：
 ```bash
-pip install requests beautifulsoup4 pandas fake-useragent
+pip install -r requirements.txt
 ```
 - #### 使用说明
   - 1.在 `THREAD_LIST_FILE` 中设置您要抓取的帖子ID列表。

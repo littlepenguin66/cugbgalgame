@@ -18,7 +18,7 @@ This project involves the development and training of a large language model tha
   - `fake_useragent`
 - You can install them using the following command:
 ```bash
-pip install requests beautifulsoup4 pandas fake-useragent
+pip install -r requirements.txt
 ```
 - #### Usage Instructions
   - 1. Set the thread IDs you wish to crawl in the `THREAD_LIST_FILE`.
