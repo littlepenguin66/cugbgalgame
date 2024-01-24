@@ -40,6 +40,6 @@ pip install -r requirements.txt
 ## 许可证信息
 本项目使用 AGPL-3.0 许可证。
 ## 联系信息
-或有任何建议，欢迎通过以下方式联系我：
+或有任何建议，欢迎通过以下方式联系：
 - 刷视频去：[哈哈哈](www.bilibili.com)
 ---
