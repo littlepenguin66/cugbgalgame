@@ -12,7 +12,6 @@ import os
 #尝试读取cookies.
 try:
     with open('cookies.txt', 'r') as f:
-        #读取文件中cookies，每个cookies用";"隔开
         cookies = f.read()
 #失败则创建cookies.txt文件并中断程序
 except:
@@ -20,16 +19,6 @@ except:
         f.write('cookies')
     print('请在cookies.txt文件中输入cookies')
     exit()
-#打开网页并获取cookies
-def get_cookies(url):
-
-
-
-uprange = 1000  # 爬取帖子的上限
-downrange = 1 # 爬取帖子的下限
-
-# 获取当前时间并转换为字符串格式
-current_time = datetime.datetime.now().strftime('%Y%m%d%H')
 
 ua = UserAgent()
 comment_list_check = []
@@ -74,6 +63,7 @@ def get_data(tzid):
         with open('tiebajindu2.txt', 'w') as f:
             f.write(str(pg))
         url = f'https://tieba.baidu.com/p/totalComment?tid={tzid}=&pn={pg}&see_lz=0'
+        #检验是否正常获取评论，r1=0则中断，为1则正常
         r1 = get_content(url)
         if r1 == 0:
             return 0
@@ -85,6 +75,12 @@ def get_data(tzid):
         f.write('2')
 
 
+# {
+#     "content": "类型#上衣*版型#宽松*版型#显瘦*图案#线条*衣样式#衬衫*衣袖型#泡泡袖*衣款式#抽绳",
+#     "summary": "这件衬衫的款式非常的宽松，利落的线条可以很好的隐藏身材上的小缺点，穿在身上有着很好的显瘦效果。领口装饰了一个可爱的抽绳，漂亮的绳结展现出了十足的个性，配合时尚的泡泡袖型，尽显女性甜美可爱的气息。"
+# }
+#该部分的目标是形成形如上文的数据结构，以便后续处理
+#用上下楼层作为对应
 def get_content(url):
     r = requests.get(url, headers=headers)
     global comment_list_check
@@ -101,20 +97,15 @@ def get_content(url):
             for comment_id, comment_info in comment_list.items():
                 for comment in comment_info["comment_info"]:
                     content = comment["content"]
-                    content = re.sub('<.*?>', '', content)
+                    content = re.sub('<.*?>', '', content)#去除表情包及图片
                     print("评论:", content)
                     if len(content) >= 31:
                         comment_list1.append(content)
         output_dir = '../Crawlers/Data/csv' # 保存路径
-        file_name_path = '../Crawlers/Data/file_name.txt' # 保存文件名
         if comment_list1 == comment_list_check: # 检测是否有新的评论
             return 1
         df = pd.DataFrame(comment_list1, columns=['评论']) # 创建DataFrame
-        filename = current_time + 'tieba.csv' # 创建文件名
-        df.to_csv(os.path.join(output_dir, filename), mode='a', index=False, header=False) # 保存文件
-        if not os.path.exists(os.path.join(output_dir, filename)):
-            with open(file_name_path, 'a') as file:
-                file.write(filename + '\n')
+        df.to_csv(os.path.join(output_dir, 'sunba'), mode='a', index=False, header=False) # 保存文件
         comment_list_check = comment_list1 # 更新评论列表
     else:
         print('over')
@@ -122,8 +113,7 @@ def get_content(url):
 
 
 def get_tzid():
-    # 第二个参数是总帖子数
-    # 检测tzid_list.txt文件是否存在，如果存在则读取，如果不存在则创建
+    #获取tzid的部分已拆分，此部分只读取
     try:
         tzid_list = []
         with open('tzid_list.txt', 'r') as f:
@@ -131,20 +121,9 @@ def get_tzid():
                 tzid_list.append(line.strip())
 
     except:
-        # 创建一个空的列表
-        tzid_list = []
-        for i in range(downrange, uprange, 50):
-            url = f'https://tieba.baidu.com/f?kw=%E5%AD%99%E7%AC%91%E5%B7%9D&ie=utf-8&pn={i}'
-            response = requests.get(url, headers=headers)
-            html = response.text
-            href_list = re.findall(r'href="/p/(.*?)"', html)
-            tzid_list.extend(href_list)
-        print('重新记录帖子id')
-        # 保存帖子id
-        with open('tzid_list.txt', 'w') as f:
-            for tzid in tzid_list:
-                f.write(tzid + '\n')
-    # 检测是否有tiebajindu.txt文件，如果没有则创建
+        print('请使用tzid_part.py获取tzid_list.txt')
+        return 0
+
     try:
         with open('tiebajindu.txt', 'r') as f:
             pass
