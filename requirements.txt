@@ -6,3 +6,9 @@ matplotlib
 seaborn
 fake-useragent
 jieba
+torch
+sentencepiece
+torchinfo
+pdf2image
+pytesseract
+Pillow
