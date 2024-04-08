@@ -6,3 +6,4 @@ matplotlib
 seaborn
 fake-useragent
 jieba
+openai

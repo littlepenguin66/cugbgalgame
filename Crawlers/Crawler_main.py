@@ -141,7 +141,7 @@ def get_tzid():
             tzid_list.extend(href_list)
         print('重新记录帖子id')
         # 保存帖子id
-        with open('tzid_list.txt', 'w') as f:
+        with open('tzid_list.txt', 'w') as f://
             for tzid in tzid_list:
                 f.write(tzid + '\n')
     # 检测是否有tiebajindu.txt文件，如果没有则创建
