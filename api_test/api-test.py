@@ -9,7 +9,7 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "sk-HYZP4OnB0s7gPQZKbhy
 with open ("text.txt", "r", encoding="utf-8") as f:
     text = f.read()
 
-MODEL = "gpt-3.5-turbo"
+MODEL = "gpt-4"
 response = client.chat.completions.create(
     model=MODEL,
     messages=[
@@ -18,7 +18,7 @@ response = client.chat.completions.create(
         {"role": "user", "content": "content的内容应尽可能精确，避免出现多个对象的描述，summary的内容应尽可能简洁，避免过于冗长。"},
         {"role": "user", "content": '请你将以下这段文字转化为若干{"content": "","summary": ""}的格式，content内容为文章描述的具体对象，summary为对该对象的描述,若有多个具体对象则相应生成多对content与summary，每一组均有一对{}' + text},
     ],
-    temperature=0,
+    temperature=0.4,
 )
 #仅输出content部分
 print(response.choices[0].message.content)
