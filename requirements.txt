@@ -1,11 +1,13 @@
-requests
-beautifulsoup4
-pandas
+requests~=2.31.0
+beautifulsoup4~=4.12.3
+pandas~=2.2.2
 numpy
 matplotlib
 seaborn
 fake-useragent
-jieba
+jieba~=0.42.1
 zhipuai
 paddlepaddle
 openai
+gradio~=4.28.3
+pillow~=10.3.0
