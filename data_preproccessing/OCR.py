@@ -2,9 +2,9 @@ import os
 import paddleocr as ocr
 
 def ocr_paddle(img_path):
-     ocr_instance = ocr.PaddleOCR(use_angle_cls=True, lang='ch')  # 根据参数设置初始化 OCR 实例
-     result = ocr_instance.ocr(img_path, cls=True)  # 使用 OCR 实例识别图片中的文字
-     return result  # 返回识别结果
+    ocr_instance = ocr.PaddleOCR(use_angle_cls=True, lang='ch')  # 根据参数设置初始化 OCR 实例
+    result = ocr_instance.ocr(img_path, cls=True)  # 使用 OCR 实例识别图片中的文字
+    return result  # 返回识别结果
 
 # 获取同一目录下的所有png文件
 img_dir = './png'

@@ -24,32 +24,6 @@ def is_cogview_model(model_name):
     cogview_models = ["cogview-3"]
     return model_name in cogview_models
 
-
-def generate_response(model_name, prompt, Tempereture):
-    proxy_status = "Proxy status: Active" if LLMconfig.USE_PROXY else "Proxy status: Inactive"
-    proxy_location = "No proxy location"
-    if LLMconfig.USE_PROXY:
-        try:
-            proxy_location = check_proxy(LLMconfig.proxies)
-            if "无效" in proxy_location:
-                proxy_status = "Proxy status: Invalid"
-        except Exception as e:
-            proxy_status = "Proxy status: Invalid"
-            proxy_location = str(e)
-    model_handlers = {
-        "openai": handle_openai_model,
-        "zhipuai": handle_zhipuai_model,
-        "cogview": handle_cogview_model
-    }
-    for model_type, handler in model_handlers.items():
-        if globals()[f"is_{model_type}_model"](model_name):
-            try:
-                return handler(model_name, prompt, Tempereture), proxy_location, proxy_status
-            except Exception as e:
-                return str(e), proxy_location, proxy_status
-    return "Model not found", proxy_location, proxy_status
-
-
 def handle_openai_model(model_name, prompt, Tempereture):
     from openai import OpenAI
     client = OpenAI(api_key=LLMconfig.OPENAI_API_KEY)
@@ -84,6 +58,30 @@ def handle_cogview_model(model_name, prompt, Tempereture):
     image = Image.open(io.BytesIO(image_data))
     return image
 
+def generate_response(model_name, prompt, Tempereture):
+    proxy_status = "Proxy status: Active" if LLMconfig.USE_PROXY else "Proxy status: Inactive"
+    proxy_location = "No proxy location"
+    if LLMconfig.USE_PROXY:
+        try:
+            proxy_location = check_proxy(LLMconfig.proxies)
+            if "无效" in proxy_location:
+                proxy_status = "Proxy status: Invalid"
+        except Exception as e:
+            proxy_status = "Proxy status: Invalid"
+            proxy_location = str(e)
+    proxy_info = f"{proxy_status}, {proxy_location}"
+    model_handlers = {
+        "openai": handle_openai_model,
+        "zhipuai": handle_zhipuai_model,
+        "cogview": handle_cogview_model
+    }
+    for model_type, handler in model_handlers.items():
+        if globals()[f"is_{model_type}_model"](model_name):
+            try:
+                return handler(model_name, prompt, Tempereture), proxy_location, proxy_status
+            except Exception as e:
+                return str(e), proxy_location, proxy_status
+    return "Model not found", proxy_location, proxy_status
 
 if __name__ == "__main__":
     if LLMconfig.USE_PROXY:
@@ -98,7 +96,11 @@ if __name__ == "__main__":
     iface = gr.Interface(
         fn=generate_response,
         inputs=[model_name, prompt, T],
-        outputs=[gr.TextArea(label="AI回答"), gr.Textbox(label="代理位置"), gr.Textbox(label="代理状态")],
+        outputs=[
+            gr.TextArea(label="AI回答"),
+            gr.Image(label="AI生成的图片"),
+            gr.Textbox(label="代理信息"),
+        ],
         title="欢迎使用猪肉AI",
         description="使用OpenAI和ZhipuAI的API生成回答",
     )

@@ -1,0 +1,316 @@
+模型名称,输入文本,Temperature,output,flag,username,timestamp
+glm-4,"'提取一下内容的关键点并转换成instruction，input 和output三个栏目的json格式，只需要json代码形式，不需要其他额外输出：1. 引言：快速入门Gradio —— 你的AI展示利器
+Gradio的简介
+ 在人工智能飞速发展的今天，向世界展示你的AI模型变得越来越重要。这就是Gradio发挥作用的地方：一个简单、直观、且强大的工具，让初学者到专业开发者的各个层次的人都能轻松展示和分享他们的AI模型。
+
+选择Gradio的理由
+ Gradio的魅力在于它的易用性。无需复杂的前端知识，只需几行代码，你就能将任何机器学习模型转化为一个美观、交互式的界面。这不仅使模型展示变得简单，还为非技术背景的人群提供了探索和理解AI的窗口。
+
+ 而对于追求深度定制和企业级应用的开发者来说，Gradio同样提供了强大的功能和灵活的配置选项。无论是定制复杂的用户界面，还是在不同的环境中部署你的应用，Gradio都能胜任。
+
+ 在这里，我们将一起探索Gradio的各个方面。从基础概念的讲解到高级应用的实践，再到企业级部署的策略，我们将逐步深入，帮助你全面掌握Gradio。无论你是AI领域的新手，还是资深的技术专家，相信在这里，你都能找到值得一读的内容。
+
+本教程中的所有示例和代码都是基于Gradio的新版本API编写的。在新版本的Gradio中，一些输入输出组件的调用方式已经得到简化。在旧版本中我们可能会使用gr.inputs.Audio来创建一个音频输入组件，用gr.outputs.Audio来创建一个音频输出组件，而在新版中，您只需使用gr.Audio即可。这种变化旨在使API更加直观和易于使用，另外inputs组件的参数可能也有所修改，在使用组件的时候需要根据实际情况传入参数。
+2.基础入门：第一步，掌握Gradio
+安装与配置
+环境要求：Gradio 需要Python 3.8 或更高版本的Python版本
+操作系统：Gradio可以在Windows、MacOS和Linux等主流操作系统上运行。
+安装步骤：使用pip安装，即打开你的终端或命令提示符，输入以下命令来安装Gradio
+pip install gradio
+检查安装：安装完成后，可以通过运行以下Python代码来检查Gradio是否正确安装
+import gradio as gr
+print(gr.__version__)
+# 4.15.0
+Gradio基础教程：讲解Gradio的基本概念和操作
+1. 初识Gradio
+
+Gradio简介：Gradio是一个开源的Python库，用于创建机器学习模型的交互式界面。它使得展示和测试模型变得简单快捷，无需深入了解复杂的前端技术。
+使用场景：Gradio广泛应用于数据科学、教育、研究和软件开发领域，尤其适合于快速原型设计、模型验证、演示和教学。
+2. 核心组件
+
+界面（Interface）：Gradio的核心是Interface类，它允许用户定义输入和输出类型，创建交互式的Web界面。
+输入类型：Gradio支持多种输入类型，如gr.Text用于文本输入，gr.Image用于图像上传，gr.Audio用于音频输入等。
+输出类型：输出类型与输入类型相对应，包括gr.Text、gr.Image和gr.Audio等，用于展示模型的输出结果。
+3. 基本操作
+
+创建界面
+import gradio as gr
+
+def greet(name):
+    return ""Hello "" + name + ""!""
+iface = gr.Interface(fn=greet, inputs=gr.Textbox(), outputs=gr.Textbox())
+iface.launch()
+
+这段代码创建了一个简单的Gradio界面，用户可以输入名字，点击提交后界面会显示问候语。
+
+
+4. 交互流程
+
+处理和输出：上面的示例中，greet函数接收用户输入的名字，并返回问候语。Gradio自动处理这种输入输出流程，使得交互流畅自然。
+回调函数：在Gradio中，界面与Python函数（如greet）直接关联，这种函数被称为回调函数，负责处理输入数据并生成输出。
+5. 界面定制
+
+修改样式：Gradio界面可以通过参数定制，如增加title、description属性来提供界面的标题和描述：
+iface = gr.Interface(
+    fn=greet,
+    inputs=gr.Textbox(),
+    outputs=gr.Textbox(),
+    title=""简单问候"",
+    description=""输入你的名字，获得个性化问候。""
+)
+
+实用属性：Interface类提供了多种属性，如layout用于改变输入输出组件的布局，theme用于改变界面主题风格等。
+创建Gradio应用：创建一个简单的“Hello World”示例
+在这个例子中，我们将创建一个简单的Gradio应用，它接受用户的名字作为输入，并返回一个问候语。
+
+设置开发环境： 首先，确保你的Python环境中已经安装了Gradio。如果尚未安装，可以通过以下命令安装：
+pip install gradio
+编写Python脚本： 打开一个新的Python脚本文件，比如命名为gradio_hello_world.py。
+导入Gradio库： 在脚本的开始处导入Gradio库：
+import gradio as gr
+定义处理函数： 接下来，定义一个处理用户输入的函数。这个函数将接收一个字符串参数（用户的名字），并返回一个问候语。
+defgreet(name): returnf""Hello {name}!""
+创建Gradio界面： 使用Gradio的Interface类来创建一个交互式界面。这个界面将有一个文本输入框和一个文本输出框。
+iface = gr.Interface(fn=greet, inputs=""text"", outputs=""text"")
+运行应用： 最后，使用launch()方法启动你的应用。
+iface.launch()
+尝试你的应用： 运行脚本后，你的默认Web浏览器会打开一个新的页面，显示你的Gradio应用。在文本框中输入你的名字，点击提交，你会看到问候语出现在下方。
+界面元素介绍：详解不同的输入输出组件
+ Gradio提供了多种输入和输出组件，适应不同的数据类型和展示需求。了解这些组件对于设计有效的Gradio界面至关重要。
+
+输入组件 (Inputs)
+
+Audio：允许用户上传音频文件或直接录音。参数：source: 指定音频来源（如麦克风）、type: 指定返回类型。 示例：gr.Audio(source=""microphone"", type=""filepath"")
+Checkbox：提供复选框，用于布尔值输入。参数：label: 显示在复选框旁边的文本标签。 示例：gr.Checkbox(label=""同意条款"")
+CheckboxGroup：允许用户从一组选项中选择多个。参数：choices: 字符串数组，表示复选框的选项、label: 标签文本。示例：gr.CheckboxGroup([""选项1"", ""选项2"", ""选项3""], label=""选择你的兴趣"")
+ColorPicker：用于选择颜色，通常返回十六进制颜色代码。参数：default: 默认颜色值。示例：gr.ColorPicker(default=""#ff0000"")
+Dataframe：允许用户上传CSV文件或输入DataFrame。参数：headers: 列标题数组、row_count: 初始显示的行数。示例：gr.Dataframe(headers=[""列1"", ""列2""], row_count=5)
+Dropdown：下拉菜单，用户可以从中选择一个选项。参数：choices: 字符串数组，表示下拉菜单的选项、label: 标签文本。示例：gr.Dropdown([""选项1"", ""选项2"", ""选项3""], label=""选择一个选项"")
+File：用于上传任意文件，支持多种文件格式。参数：file_count: 允许上传的文件数量，如""single""或""multiple""、type: 返回的数据类型，如""file""或""auto""。示例：gr.File(file_count=""single"", type=""file"")
+Image：用于上传图片，支持多种图像格式。参数：type图像类型，如pil。示例：gr.Image(type='pil')
+Number：数字输入框，适用于整数和浮点数。参数：default: 默认数字、label: 标签文本。示例：gr.Number(default=0, label=""输入一个数字"")
+Radio：单选按钮组，用户从中选择一个选项。参数：choices: 字符串数组，表示单选按钮的选项、label: 标签文本。示例：gr.Radio([""选项1"", ""选项2"", ""选项3""], label=""选择一个选项"")
+Slider：滑动条，用于选择一定范围内的数值。参数：minimum: 最小值、maximum: 最大值、step: 步长、label: 标签文本。示例：gr.Slider(minimum=0, maximum=10, step=1, label=""调整数值"")
+Textbox：单行文本输入框，适用于简短文本。参数：default: 默认文本、placeholder: 占位符文本。示例：gr.Textbox(default=""默认文本"", placeholder=""输入文本"")
+Textarea：多行文本输入区域，适合较长的文本输入。参数：lines: 显示行数、placeholder: 占位符文本。示例：gr.Textarea(lines=4, placeholder=""输入长文本"")
+Time：用于输入时间。参数：label: 标签文本。示例：gr.Time(label=""选择时间"")
+Video：视频上传组件，支持多种视频格式。参数：label: 标签文本。示例：gr.Video(label=""上传视频"")
+Data：用于上传二进制数据，例如图像或音频的原始字节。参数：type: 数据类型，如""auto""自动推断。示例：gr.Data(type=""auto"", label=""上传数据"")
+输出组件 (Outputs)
+
+Audio：播放音频文件。参数：type 指定输出格式。示例：gr.Audio(type=""auto"")
+Carousel：以轮播方式展示多个输出，适用于图像集或多个数据点。参数：item_type 设置轮播项目类型。示例：gr.Carousel(item_type=""image"")
+Dataframe：展示Pandas DataFrame，适用于表格数据。参数：type 指定返回的DataFrame类型。示例：gr.Dataframe(type=""pandas"")
+Gallery：以画廊形式展示一系列图像。
+HTML：展示HTML内容，适用于富文本或网页布局。
+Image：展示图像。参数：type 指定图像格式。 示例：gr.Image(type=""pil"")
+JSON：以JSON格式展示数据，便于查看结构化数据。
+KeyValues：以键值对形式展示数据。
+Label：展示文本标签，适用于简单的文本输出。
+Markdown：支持Markdown格式的文本展示。
+Plot：展示图表，如matplotlib生成的图表。
+Text：用于显示文本，适合较长的输出。
+Video：播放视频文件。
+示例应用
+
+让我们以一个简单的应用为例，演示如何使用文本输入和标签输出：
+
+import gradio as gr
+
+def greet(name):
+    return f""Hello, {name}!""
+
+iface = gr.Interface(
+    fn=greet,
+    inputs=gr.Textbox(label=""Your Name""),
+    outputs=gr.Label()
+)
+iface.launch()
+
+在这个示例中，用户可以在文本框中输入名字，点击提交后，应用将在标签中显示问候语。
+3. 中级应用：提升你的Gradio技能
+多样化输入输出处理
+ 在Gradio中，有效地处理多种输入（Inputs）和输出（Outputs）类型是提升用户交互体验的关键。不同类型的组件可以帮助用户更直观地与模型进行交互，并获得清晰的反馈。
+处理不同类型的输入
+
+1、组合不同输入类型： 在Gradio中，你可以在同一个界面上结合使用多种输入类型。
+* 示例：结合文本框（Textbox）和图片上传（Image）输入，用于同时接收用户的文本描述和相关图片。
+2、输入类型的选择：根据你的模型需求选择合适的输入类型。
+* 例如，如果你的模型进行图像分类，那么应选择gr.Image()；如果是文本生成模型，则应使用gr.Textbox()。
+3、自定义输入设置：利用输入组件的参数自定义用户的输入体验。
+* 例如，为gr.Slider()设置最大值和最小值，或为gr.Dropdown()提供一个选项列表。
+处理不同类型的输出
+
+展示多样化的输出：Gradio允许你以多种方式展示模型的输出。
+* 示例：对于图像处理模型，使用gr.Image()来展示处理后的图像；对于文本分析，使用gr.Text()来展示分析结果。
+输出类型的选择：根据模型的输出选择合适的输出类型。
+如果模型输出为结构化数据，可以考虑使用gr.Dataframe()；对于音频处理模型，使用gr.Audio()。
+增强输出可视化：使用合适的输出类型增强模型输出的可视化效果。
+* 例如，使用gr.Gallery()来展示一系列生成的图像，或使用gr.Plot()来展示数据图表。
+实例应用
+
+让我们通过一个实际的例子来演示如何处理多样化的输入输出：
+
+import gradio as gr
+
+def process_data(text, image):
+    # 假设这里有数据处理逻辑
+    processed_text = text.upper()
+    return processed_text, image
+
+iface = gr.Interface(
+    fn=process_data,
+    inputs=[gr.Textbox(label=""输入文本""), gr.Image(label=""上传图片"")],
+    outputs=[gr.Text(label=""处理后的文本""), gr.Image(label=""原始图片"")]
+)
+iface.launch()
+
+在这个示例中，我们创建了一个Gradio应用，它接收文本和图片作为输入，并返回处理后的文本和原始图片作为输出。这样的应用展示了如何有效地结合和处理不同类型的输入输出。
+界面定制
+ 在Gradio中，界面的定制化是提升用户体验的关键。你可以调整布局、样式和界面元素的显示方式，使其更符合特定需求和审美。
+
+自定义布局
+
+组合布局：在Gradio中，你可以灵活地组合不同的输入和输出组件。
+* 示例：创建一个界面，其中包括文本输入、图片上传和按钮，以实现不同功能的模块化布局。
+调整元素排列：利用布局参数调整元素的排列方式。
+* 示例：使用layout=""grouped""或layout=""stacked""来更改组件的排列方式，使界面更加紧凑或分散。
+定制样式
+
+更改界面风格：使用CSS样式来定制界面的外观。
+* 示例：添加CSS代码来更改按钮的颜色、字体的大小或元素的边距。
+使用主题：Gradio提供了内置的主题选项，可用于快速更改界面风格。
+* 示例：使用theme=""dark""或theme=""huggingface""来应用暗色主题或Hugging Face风格。
+响应式设计
+
+适配不同屏幕大小：确保你的Gradio界面在不同设备上均有良好的显示效果。
+* 示例：测试在手机、平板和电脑上的显示情况，调整布局以适应不同屏幕。
+界面元素的适配性：调整输入输出组件的大小和排列，使其适应不同的显示环境。
+* 示例：为小屏幕减少边距和间距，或在大屏幕上增加额外的空间。
+实例应用
+
+让我们通过一个具体的例子来展示如何定制一个Gradio界面：
+
+import gradio as gr
+
+def process_data(text):
+    return text.upper()
+
+css = "".input_text { color: blue; } .output_text { font-weight: bold; }""
+
+iface = gr.Interface(
+    fn=process_data,
+    inputs=gr.Textbox(lines=2, placeholder=""输入文本""),
+    outputs=""text"",
+    css=css,
+    theme=""dark""
+)
+iface.launch()
+
+在这个示例中，我们创建了一个简单的文本处理应用，应用了暗色主题，并通过CSS改变了输入输出文本的颜色和样式。(貌似没有起作用，原因待排查！)
+与预训练模型相结合
+ 在Gradio中，结合预训练模型可以让你快速创建强大的交互式界面，展示模型的能力。以下是如何实现这一目标的步骤和建议。
+
+选择合适的预训练模型
+
+模型源：选择适合你需求的预训练模型。常见的来源包括TensorFlow Hub、PyTorch Hub或Hugging Face模型库。
+模型类型：确定你的应用场景，如图像识别、文本生成或语音处理，然后选择相应类型的模型。
+集成模型到Gradio应用
+
+加载模型：根据所选模型的文档加载模型。这通常涉及导入相应的库并加载预训练权重。
+创建处理函数：编写一个处理函数，该函数接收Gradio输入，并使用模型进行预测或处理，然后返回输出。
+构建Gradio界面：根据模型的输入输出类型，选择合适的Gradio输入输出组件。然后将处理函数绑定到Gradio界面。
+示例：集成图像分类模型
+
+假设我们使用Hugging Face的预训练图像分类模型。以下是一个简单的示例：
+
+import gradio as gr
+from transformers import pipeline
+
+# 加载预训练模型
+model = pipeline('image-classification')
+
+# 定义处理函数
+def classify_image(img):
+    return {i['label']: i['score'] for i in model(img)}
+
+# 创建Gradio界面
+iface = gr.Interface(
+    fn=classify_image,
+    inputs=gr.Image(type=""pil""),
+    outputs=gr.Label(num_top_classes=5))
+iface.launch()
+
+在这个例子中，我们使用了一个预训练的图像分类模型来识别上传的图片，并显示前五个最可能的类别。
+动态界面与实时反馈
+ 在Gradio应用中，实现动态界面和实时反馈可以极大地提高用户的交互体验。以下是如何实现这些功能的步骤和建议。
+
+实现动态界面
+
+条件显示组件：使用Gradio的内置功能来根据用户输入动态显示或隐藏某些组件。
+* 示例：根据用户选择的选项，显示不同的输入字段。
+界面元素更新：根据用户的交互实时更新界面元素。
+* 示例：用户上传图片后，立即在界面上显示预览。
+
+
+提供实时反馈
+
+即时处理与展示结果：设计应用逻辑，使其能够快速响应用户输入并展示结果。
+* 示例：用户输入文本后，立即显示文本分析结果。
+使用状态管理：利用状态管理来保存和更新用户交互的状态。
+* 示例：记录用户的选择或输入，以便在整个会话中使用。
+示例：实现图片处理应用的动态界面
+
+假设我们正在构建一个图片处理应用，以下是如何实现动态界面和实时反馈的示例：
+
+import gradio as gr
+
+def process_image(img, filter_type):
+    if filter_type == ""Black and White"":
+        img = img.convert(""L"")
+    return img
+
+iface = gr.Interface(
+    fn=process_image,
+    inputs=[gr.Image(type=""pil""), gr.Radio([""None"", ""Black and White""])],
+    outputs=""image""
+)
+iface.launch()
+
+在这个例子中，用户上传图片并选择滤镜类型后，应用会立即处理并显示处理后的图片。这个过程实现了动态交互和实时反馈。
+
+
+高级特性和组件
+ 在Gradio的中级应用部分，引入高级特性和组件是提升应用交互性和功能性的关键。以下是Gradio提供的一些高级特性和组件及其应用方式。
+
+热加载支持
+
+快速迭代开发：利用热加载特性，使得在开发过程中对代码所做的更改能够即时反映在应用界面上，无需重启应用。这对于调试和快速迭代开发非常有帮助。
+Jupyter Notebook集成
+
+Notebook内交互：Gradio应用可以直接嵌入Jupyter Notebook中，便于在数据科学和机器学习的探索性分析中直接展示和交互。用户可以在Notebook环境中实时演示和测试Gradio应用。
+共享和展示
+
+URL共享：Gradio允许用户通过生成的URL共享他们的应用，这使得在不同设备和环境中的演示和测试变得简单。用户可以通过设置share=True来获取可以公开访问的URL。
+自定义组件
+
+个性化界面设计：用户可以根据特定需求创建自定义的输入输出组件，包括利用HTML、CSS和JavaScript进行定制。这使得应用界面可以高度个性化，更好地满足特定用途。
+4. 高级功能：成为Gradio专家
+高级界面和布局
+使用ChatInterface
+
+聊天界面：ChatInterface允许创建类似聊天应用的界面，适用于构建交云式聊天机器人或其他基于文本的交互式应用。
+import gradio as gr
+
+def slow_echo(message, history):
+    for i in range(len(message)):
+        time.sleep(0.05)
+        yield ""机器人回复: "" + message[: i+1]
+
+demo = gr.ChatInterface(slow_echo).queue()
+
+if __name__ == ""__main__"":
+    demo.launch()
+
+使用ChatInterface创建聊天界面，构建一个简单的聊天机器人界面，接收用户输入，并回复相应的文本信息。
+",0.8,"{""instruction"": ""\u5c06\u4e0a\u8ff0\u5185\u5bb9\u7684\u5173\u952e\u70b9\u8f6c\u6362\u4e3ainstruction\u3001input\u548coutput\u7684json\u683c\u5f0f\u3002"", ""input"": [{""type"": ""text"", ""description"": ""\u4e0a\u8ff0\u5185\u5bb9\u7684key points""}], ""output"": [{""type"": ""json"", ""description"": ""\u8f6c\u6362\u540e\u7684instruction\u3001input\u548coutput json\u683c\u5f0f""}]}",,,2024-05-03 17:51:43.158979

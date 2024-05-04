@@ -1,6 +1,6 @@
 # 请不要直接运行此文件，运行useAPI.py
 
-USE_PROXY = False
+USE_PROXY = True
 if USE_PROXY:
     """
     代理网络的地址，打开你的代理软件查看代理协议(socks5h / http)、地址(localhost)和端口(11284)
@@ -33,5 +33,5 @@ Message = {"role": "user", "content": ""}
 
 if __name__ == "__main__":
     print("请不要直接运行此文件，运行useAPI.py")
-    print("Please do not run this file directly, run useAPI.py")
+    print("Please do not run this file directly, run data_proccessing.py")
     exit(0)
