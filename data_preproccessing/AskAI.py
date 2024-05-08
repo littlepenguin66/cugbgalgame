@@ -24,6 +24,7 @@ def is_cogview_model(model_name):
     cogview_models = ["cogview-3"]
     return model_name in cogview_models
 
+
 def handle_openai_model(model_name, prompt, Tempereture):
     from openai import OpenAI
     client = OpenAI(api_key=config.OPENAI_API_KEY)
@@ -58,6 +59,7 @@ def handle_cogview_model(model_name, prompt, Tempereture):
     image = Image.open(io.BytesIO(image_data))
     return image
 
+
 def generate_response(model_name, prompt, Tempereture):
     proxy_status = "Proxy status: Active" if config.USE_PROXY else "Proxy status: Inactive"
     proxy_location = "No proxy location"
@@ -78,10 +80,16 @@ def generate_response(model_name, prompt, Tempereture):
     for model_type, handler in model_handlers.items():
         if globals()[f"is_{model_type}_model"](model_name):
             try:
-                return handler(model_name, prompt, Tempereture), proxy_location, proxy_status
+                if model_type == "cogview":
+                    image = handler(model_name, prompt, Tempereture)
+                    return None, None, image
+                else:
+                    text = handler(model_name, prompt, Tempereture)
+                    return text, proxy_info, None
             except Exception as e:
-                return str(e), proxy_location, proxy_status
-    return "Model not found", proxy_location, proxy_status
+                return str(e), proxy_info, None
+    return "Model not found", proxy_info, None
+
 
 if __name__ == "__main__":
     if config.USE_PROXY:
