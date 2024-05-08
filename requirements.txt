@@ -1,24 +1,33 @@
-python<=3.9
-# 数据处理
-pandas
-requests
+accelerate>=0.27.2
 beautifulsoup4
+datasets>=2.14.3
+einops
 fake-useragent
-jieba
-patch-ng
-paddleocr
-
-# Web界面及交互
+fastapi
+fire
 gradio
-
-# 图像处理
-Pillow
-
-# 并行处理
-multiprocess
-
-# 文档解析
+gradio>=4.0.0
+jieba
 lxml
-
+matplotlib
+multiprocess
 openai
-zhipuai
+packaging
+paddleocr
+pandas
+patch-ng
+peft>=0.10.0
+Pillow
+protobuf
+pydantic
+python>=3.9
+pyyaml
+requests
+scipy
+sentencepiece
+sse-starlette
+torch>=1.13.1
+transformers>=4.37.2
+trl>=0.8.1
+uvicorn
+git-lfs

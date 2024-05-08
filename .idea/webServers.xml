@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4da013c7-a716-4c78-8957-570d60461c33" name="ubuntu2204">
+        <fileTransfer rootFolder="/home/ltpg66" accessType="SFTP" host="192.168.111.128" port="22" sshConfigId="51c4cb07-ce87-461b-98cc-589b30a5e516" sshConfig="ltpg66@192.168.111.128:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" isUseRsync="true" isUseSudo="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
