@@ -25,6 +25,13 @@ def is_cogview_model(model_name):
     return model_name in cogview_models
 
 
+def is_qianwen_model(model_name):
+    qianwen_models = ["qwen-turbo",
+                      "qwen-plus", "qwen-max", "qwen-max-0403", "qwen-max-0107", "qwen-max-longcontext",
+                      "qwen-max-0428"]
+    return model_name in qianwen_models
+
+
 def handle_openai_model(model_name, prompt, Tempereture):
     from openai import OpenAI
     client = OpenAI(api_key=config.OPENAI_API_KEY)
@@ -32,6 +39,7 @@ def handle_openai_model(model_name, prompt, Tempereture):
         model=model_name,
         messages=[{"role": "user", "content": prompt}],
         temperature=Tempereture,
+        stream=True,
     )
     return response.choices[0].message.content
 
@@ -43,6 +51,7 @@ def handle_zhipuai_model(model_name, prompt, Tempereture):
         model=model_name,
         messages=[{"role": "user", "content": prompt}],
         temperature=Tempereture,
+        stream=True,
     )
     return response.choices[0].message.content
 
@@ -60,6 +69,28 @@ def handle_cogview_model(model_name, prompt, Tempereture):
     return image
 
 
+def handle_qianwen_model(model_name, prompt, Tempereture):
+    from openai import OpenAI
+
+    client = OpenAI(
+        api_key=config.QIANWEN_API_KEY,  # 使用你的DashScope的API_KEY
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",  # 填写DashScope服务endpoint
+    )
+
+    try:
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{'role': 'system', 'content': 'You are a helpful assistant.'},
+                      {'role': 'user', 'content': prompt}],
+            temperature=Tempereture,
+        )
+        return response.choices[0].message.content  # Access 'content' directly
+    except Exception as e:
+        return 'Request id: %s, error message: %s' % (
+            response.id, str(e)
+        )
+
+
 def generate_response(model_name, prompt, Tempereture):
     proxy_status = "Proxy status: Active" if config.USE_PROXY else "Proxy status: Inactive"
     proxy_location = "No proxy location"
@@ -75,7 +106,8 @@ def generate_response(model_name, prompt, Tempereture):
     model_handlers = {
         "openai": handle_openai_model,
         "zhipuai": handle_zhipuai_model,
-        "cogview": handle_cogview_model
+        "cogview": handle_cogview_model,
+        "qianwen": handle_qianwen_model
     }
     for model_type, handler in model_handlers.items():
         if globals()[f"is_{model_type}_model"](model_name):
