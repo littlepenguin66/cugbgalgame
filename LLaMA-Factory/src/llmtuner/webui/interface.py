@@ -69,7 +69,7 @@ def create_web_demo() -> gr.Blocks:
 
 
 def run_web_ui() -> None:
-    create_ui().queue().launch()
+    create_ui().queue().launch(server_port=6006)
 
 
 def run_web_demo() -> None:
