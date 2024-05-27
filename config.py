@@ -20,21 +20,26 @@ else:
 
 OPENAI_API_KEY = "your api key here"
 
-ZHIPUAI_API_KEY = "a955965374911f40f2a1c16fbaf13872.FoGwVupI7yXnQLJC"
-
+ZHIPUAI_API_KEY = ("a955965374911f40f2a1c16fbaf13872.FoGwVupI7yXnQLJC")
+#a955965374911f40f2a1c16fbaf13872.FoGwVupI7yXnQLJC
+#26d6d49190a621c4f631aa2c20e0619b.ovcTSM6eF23s4HlY
 QIANWEN_API_KEY = "sk-b45dc96a97d74715b980584ab801a981"
 
 LLM_MODEL = "glm-4"  # 可选 ↓↓↓
 AVAIL_LLM_MODELS = ["gpt-3.5-turbo", "glm-4", "cogview-3", "gpt-4-1106-preview", "gpt-4-turbo-preview",
                     "gpt-4-vision-preview", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-16k", "gpt-3.5-turbo", "qwen-turbo",
-                    "qwen-plus", "qwen-max", "qwen-max-0403", "qwen-max-0107", "qwen-max-longcontext", "qwen-max-0428"]
+                    "qwen-plus", "qwen-max", "qwen-max-0403", "qwen-max-0107", "qwen-max-longcontext", "qwen-max-0428", "glm-3-turbo"]
 
 # 选择温度
 TEMPERATURE = 0.8
 
 Message = {"role": "user", "content": ""}
 
+TencentCloud_SecretId = "AKIDXAwkZSAGTpBZ2z6ILUl7X7gNLUkUGABc"
+TencentCloud_SecretKey = "U9wnlmUKYxVLECDRwXLGOlGy06HWqJh5"
+
+
 if __name__ == "__main__":
-    print("请不要直接运行此文件，运行AskAI.py")
-    print("Please do not run this file directly, run AskAI.py")
+    print("请不要直接运行此文件")
+    print("Please do not run this file directly")
     exit(0)
