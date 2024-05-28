@@ -1,3 +1,49 @@
+"""
+猪肉AI - 一个基于多种AI模型的Web应用
+
+该应用提供了一个用户界面，允许用户选择不同的AI模型，输入问题，并调整生成回答的温度。应用支持多种模型类型，包括文本生成和图像生成。
+
+主要功能：
+- 支持多种AI模型，包括OpenAI、ZhipuAI、Cogview和Qianwen。
+- 允许用户输入问题，并根据选择的模型生成回答。
+- 提供了一个温度滑块，允许用户调整生成回答的随机性。
+- 如果使用代理，会显示代理状态和位置信息。
+- 对于图像生成模型，会显示生成的图片。
+
+使用方法：
+1. 运行该脚本。
+2. 打开浏览器，访问显示的URL。
+3. 在界面上选择一个模型。
+4. 在文本框中输入你的问题。
+5. 调整温度滑块（如果需要）。
+6. 点击提交，查看AI的回答和代理信息。
+
+注意：
+- 该应用依赖于外部API，因此需要确保网络连接正常。
+- 代理设置在配置文件中配置，如果使用代理，应用会显示代理状态和位置。
+- 图像生成模型的结果会直接显示在界面上。
+
+类和函数说明：
+ModelProcessor:
+   - __init__(config): 初始化模型处理器，配置模型检查器和处理函数。
+   - generate_response(model_name, prompt, temperature): 根据模型名称、提示和温度生成响应。
+
+main:
+   - 设置请求会话的代理（如果使用）。
+   - 创建ModelProcessor实例。
+   - 定义Gradio界面，包括模型选择、提示输入和温度调整。
+   - 启动Gradio界面。
+
+依赖库：
+- requests: 用于发送HTTP请求。
+- PIL.Image: 用于处理图像。
+- io: 用于处理流。
+- gradio: 用于创建Web界面。
+- config_manager: 用于管理配置。
+- check_proxy: 用于检查代理状态。
+- model_checkers: 用于检查模型类型。
+- model_handlers: 用于处理模型生成的响应。
+"""
 import requests
 from PIL import Image
 import io
@@ -72,7 +118,7 @@ def main():
             gr.Image(label="AI生成的图片"),
         ],
         title="欢迎使用猪肉AI",
-        description="使用OpenAI和ZhipuAI的API生成回答",
+        description="使用OpenAI和ZhipuAI的API生成回答,支持的模型[‘gpt-3.5-turbo’, ‘gpt-4-1106-preview’, ‘gpt-4-turbo-preview’, ‘gpt-4-vision-preview’,‘gpt-3.5-turbo-1106’, ‘gpt-3.5-turbo-16k’, ‘gpt-3.5-turbo’,'glm-4', 'glm-3','cogview-3','qwen-turbo', 'qwen-plus', 'qwen-max', 'qwen-max-0403', 'qwen-max-0107', 'qwen-max-longcontext', 'qwen-max-0428']",
     )
 
     iface.launch()

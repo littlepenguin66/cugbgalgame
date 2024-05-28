@@ -1,13 +1,59 @@
+"""
+腾讯云批量翻译JSON数据脚本。
+
+该脚本使用腾讯云翻译API，提供了批量翻译JSON数据的功能。
+
+类说明：
+
+RateLimiter:
+速率限制器，用于控制每秒请求的最大数量。
+属性:
+   max_rate (int): 每秒允许的最大请求次数。
+   count (int): 自上次一秒以来的请求次数。
+   start_time (float): 第一次请求的开始时间。
+
+Translator:
+翻译器类，用于处理使用腾讯云TMT API的文本翻译。
+属性:
+   cred: 腾讯云API凭据。
+   http_profile: HTTP配置。
+   client_profile: 客户端配置。
+   client: TMT客户端实例。
+   limiter: 速率限制器实例。
+
+JSONHandler:
+JSON数据处理工具类，用于从文件读取和写入JSON数据。
+静态方法:
+   read_json_file: 从指定路径读取JSON文件并返回数据。
+   save_to_json: 将数据保存到指定路径的JSON文件。
+
+BatchTranslator:
+批量翻译器类，使用Translator实例对JSON对象进行批量翻译。
+方法:
+   translate_obj: 翻译JSON对象中的文本字段。
+   translate_json: 读取输入JSON文件，翻译内容，并将结果保存到输出文件。
+
+函数说明：
+
+main:
+脚本的入口点，负责初始化Translator和BatchTranslator实例，并开始翻译过程。
+
+使用方法：
+该脚本作为独立的Python脚本运行，需要安装腾讯云SDK并配置API凭据。
+
+注意：
+在翻译过程中，脚本会定期保存翻译进度，以防止数据丢失。
+"""
 import json
 import time
 import os
 import sys
+from data_preproccessing.config_manager import config
 from tencentcloud.common import credential
 from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
 from tencentcloud.tmt.v20180321 import tmt_client, models
-from config import TencentCloud_SecretId, TencentCloud_SecretKey
 
 class RateLimiter:
     def __init__(self, max_rate):
@@ -86,6 +132,13 @@ class BatchTranslator:
         JSONHandler.save_to_json(data, output_file_path)  # 最后再保存一次，确保所有数据都被保存
 
 if __name__ == "__main__":
-    translator = Translator(secret_id=TencentCloud_SecretId, secret_key=TencentCloud_SecretKey)
+    if len(sys.argv) != 3:
+        print("Usage: python translateDatasetTencent.py <input_file_path> <output_file_path>")
+        sys.exit(1)
+
+    input_file_path = sys.argv[1]
+    output_file_path = sys.argv[2]
+
+    translator = Translator(secret_id=config.TencentCloud_SecretId, secret_key=config.TencentCloud_SecretKey)
     batch_translator = BatchTranslator(translator=translator)
-    batch_translator.translate_json('Data/json/data_parts/part_7.json', 'Data/csv/data_zh.json')
+    batch_translator.translate_json(input_file_path, output_file_path)

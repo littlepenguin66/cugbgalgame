@@ -1,5 +1,26 @@
-# copied from https://github.com/SmartFlowAI/Llama3-XTuner-CN/blob/main/web_demo.py
-# isort: skip_file
+"""
+Phi3-Chinese 聊天机器人Web演示。
+
+该脚本利用Streamlit框架构建了一个交互式的Web应用程序，允许用户与Phi3-Chinese聊天机器人进行对话。
+通过加载预训练的模型和适配器，以及设置相关的生成参数，用户可以与聊天机器人进行实时的交流。
+
+主要功能包括：
+- 加载预训练的模型和适配器。
+- 设置生成参数，如最大回复长度、Top P、温度系数和重复惩罚系数。
+- 显示聊天历史记录，包括用户和机器人的消息。
+- 用户可以输入问题，聊天机器人会根据输入的问题生成回答。
+- 每次用户输入后，聊天历史记录都会更新，以显示新的对话。
+
+使用方法：
+1. 运行此脚本时，需要提供模型名称或路径作为命令行参数。
+2. 可选地，可以提供适配器名称或路径作为第二个命令行参数。
+3. 打开浏览器并访问提供的URL，即可开始与聊天机器人进行对话。
+
+注意：
+- 脚本使用Streamlit框架，需要在支持Python的环境中运行。
+- 需要安装transformers和peft库，以及Streamlit框架。
+- 脚本会占用一定的GPU资源，确保环境中有足够的GPU内存。
+"""
 import copy
 import warnings
 from dataclasses import asdict, dataclass
