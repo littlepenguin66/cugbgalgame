@@ -4,7 +4,7 @@
 [![Fork on Gitee](https://gitee.com/jerryzheng66/cugbgalgame/badge/fork.svg?theme=dark)](https://gitee.com/jerryzheng66/cugbgalgame)
 [![Star on GitHub](https://img.shields.io/github/stars/littlepenguin66/cugbgalgame.svg?style=social)](https://github.com/littlepenguin66/cugbgalgame)
 [![Fork on GitHub](https://img.shields.io/github/forks/littlepenguin66/cugbgalgame.svg?style=social)](https://github.com/littlepenguin66/cugbgalgame)
-![GitHub Forks](https://img.shields.io/github/forks/littlepenguin66/cugbgalgame?style=social)(https://github.com/littlepenguin66/cugbgalgame)
+![GitHub Forks](https://img.shields.io/github/forks/littlepenguin66/cugbgalgame?style=social)
 ![png](https://cdn.jsdelivr.net/gh/littlepenguin66/webImage/background.png)
 ## 项目简介
 本项目的目的是用于大语言模型与游戏结合的。它提供了从数据获取到智能处理的一系列功能，其中语言模型部分包括：
