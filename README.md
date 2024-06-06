@@ -4,20 +4,19 @@
 [![Fork on Gitee](https://gitee.com/jerryzheng66/cugbgalgame/badge/fork.svg?theme=dark)](https://gitee.com/jerryzheng66/cugbgalgame)
 [![Star on GitHub](https://img.shields.io/github/stars/littlepenguin66/cugbgalgame.svg?style=social)](https://github.com/littlepenguin66/cugbgalgame)
 [![Fork on GitHub](https://img.shields.io/github/forks/littlepenguin66/cugbgalgame.svg?style=social)](https://github.com/littlepenguin66/cugbgalgame)
-![GitHub Forks](https://img.shields.io/github/forks/littlepenguin66/cugbgalgame?style=social)
 ![png](https://cdn.jsdelivr.net/gh/littlepenguin66/webImage/background.png)
 ## 项目简介
-本项目的目的是用于大语言模型与游戏结合的。它提供了从数据获取到智能处理的一系列功能，其中语言模型部分包括：
+本项目的目的是用于大语言模型与应用结合的。它提供了从数据获取到智能处理到载入知识库的一系列功能，其中语言模型部分包括：
 - **数据抓取**：从百度贴吧特定板块抓取帖子内容。
-- **数据处理**：进行CSV文件创建、JSON文件分割与合并、数据翻译等操作。
+- **数据处理**：数据翻译、数据优化和数据精选等操作。
 - **数据存储**：将处理后的数据存储至CSV和JSON文件中。
 - **AI问答接口**：整合了多种AI模型，如OpenAI、ZhipuAI等，提供问答服务。
 - **图像识别**：利用PaddleOCR库实现光学字符识别功能。
 - **模型管理**：支持预训练AI模型的下载与管理。
-- **环境配置检查**：检查PyTorch版本和CUDA配置，确保系统正常运行。
+- **知识库载入**：将处理后的数据载入知识库，以供AI问答使用。（待实现）
 ## 环境与安装
 ### 系统要求
-- Python 3.6 或更高版本
+- Python 3.9 或更高版本
 ### 安装指南
 1. 克隆或下载本项目的代码。
 ```bash
@@ -25,7 +24,6 @@ git clone https://gitee.com/jerryzheng66/cugbgalgame.git
 ```
 2. 在项目根目录下执行 
 ```bash
-cd cugbgalgame
 pip install -r requirements.txt
 ``` 
 以安装所有依赖。
@@ -42,7 +40,7 @@ python data_preproccessing/AskAI.py
 2. 在本地创建分支，并进行代码修改。
 3. 提交更改，并通过Pull Request向我们贡献你的代码。
 ## 许可证
-本项目采用 [Apache License 2.0](https://opensource.org/licenses/Apache-2.0).
+本项目采用 [Apache License 2.0](https://opensource.org/licenses/Apache-2.0)。
 ## 示例与演示
 - **AI问答**：运行 `data_preproccessing/AskAI.py`，在浏览器中输入问题，即可获得AI模型的回答。
 - **图像识别**：运行 `data_preproccessing/OCR.py`，输入图片路径，程序将输出识别结果。
